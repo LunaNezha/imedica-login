@@ -1,0 +1,286 @@
+@import "@ionic/react/css/core.css";
+@import "@flaticon/flaticon-uicons/css/all/all";
+@import "@assets/styles/font-families.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  #root {
+    @apply h-screen;
+  }
+
+  html {
+    @apply bg-gray-100 no-scrollbar dark:bg-ebony-950;
+  }
+
+  body {
+    @apply mx-auto h-screen w-full max-w-sm overflow-x-hidden font-normal text-white-950 no-scrollbar dark:text-white-200 ltr:font-montserrat rtl:font-iranyekan;
+  }
+
+  input {
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active,
+    &:-internal-autofill-selected {
+      box-shadow: 0 0 0 100px transparent inset;
+      @apply !bg-transparent !text-blue-600;
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type="number"] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  ion-content::part(background),
+  ion-list,
+  ion-item::part(native) {
+    @apply bg-gray-100 text-white-950 dark:bg-ebony-950 dark:text-white-200;
+  }
+
+  ion-menu {
+    ion-content {
+      &::part(background) {
+        @apply bg-white-50 dark:bg-big-stone-950;
+      }
+    }
+
+    ion-item {
+      --min-height: auto;
+
+      &:hover {
+        i {
+          @apply text-blue-600 duration-500 ease-out dark:text-blue-500;
+        }
+      }
+
+      &::part(native) {
+        @apply rounded-xl !bg-transparent p-0;
+      }
+
+      i {
+        @apply text-xl duration-500 ease-out;
+      }
+    }
+  }
+
+  body {
+    &[dir="rtl"] {
+      ion-menu {
+        .subMenu {
+          @apply rounded-bl-md rounded-tl-md border-r-2 border-r-blue-600 dark:border-r-blue-500;
+        }
+      }
+    }
+
+    &[dir="ltr"] {
+      ion-menu {
+        .subMenu {
+          @apply rounded-br-md rounded-tr-md border-l-2 border-l-blue-600 dark:border-l-blue-500;
+        }
+      }
+    }
+  }
+
+  ion-item,
+  ion-label {
+    @apply m-0 font-normal text-white-950 dark:text-white-200 ltr:font-montserrat rtl:font-iranyekan;
+  }
+
+  i {
+    @apply flex;
+  }
+
+  ion-header {
+    ion-toolbar {
+      --border-width: 0 !important;
+    }
+  }
+
+  ion-button {
+    @apply m-0;
+  }
+
+  ion-item {
+    &::part(month-year-button) {
+      @apply text-white-950 dark:text-white-200;
+    }
+  }
+
+  button::part(calendar-day) {
+    @apply text-white-950 dark:text-white-200;
+  }
+
+  ion-skeleton-text {
+    @apply m-0 rounded-sm;
+  }
+
+  .skeleton-with-bg {
+    ion-skeleton-text {
+      @apply bg-gray-100/10 dark:bg-ebony-950/40;
+    }
+  }
+
+  .skeleton-with-no-bg {
+    ion-skeleton-text {
+      @apply bg-gray-100/10 dark:bg-big-stone-950;
+    }
+  }
+
+  .skeleton-with-no-bg-reverse {
+    ion-skeleton-text {
+      @apply bg-white-50/10 dark:bg-ebony-950/20;
+    }
+  }
+}
+
+@layer components {
+  .gradient-border-green-blue {
+    @apply animate-gradient border-2 border-transparent;
+
+    background:
+      linear-gradient(transparent, transparent) padding-box,
+      linear-gradient(to right, #34d399, #31a8cc, #2d7dff) border-box;
+  }
+
+  .gradient-text-green-blue {
+    @apply from-emerald-400 via-[#31A8CC] to-blue-500 bg-clip-text text-transparent;
+  }
+
+  .gradient-border-violet-blue {
+    @apply border-2 border-transparent;
+    background:
+      linear-gradient(transparent, transparent) padding-box,
+      linear-gradient(to right, #a78bfa, #6a84fd, #2d7dff) border-box;
+  }
+
+  .gradient-text-violet-blue {
+    @apply from-violet-400 via-[#6A84FD] to-blue-500 bg-clip-text text-transparent;
+  }
+
+  .loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    border: 3px solid;
+    border-color: #fff #fff transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+
+    &::after {
+      content: "";
+      box-sizing: border-box;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      border: 3px solid;
+      border-color: transparent #ff3d00 #ff3d00;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      animation: rotationBack 0.5s linear infinite;
+      transform-origin: center center;
+    }
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes rotationBack {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+
+  .btn {
+    @apply shadow duration-300 ease-in;
+
+    &::part(native) {
+      --background-hover: transparent;
+      --background-activated: transparent;
+      --background-focused: transparent;
+      @apply duration-300 ease-in;
+    }
+
+    &:hover {
+      @apply shadow-lg duration-300 ease-in;
+
+      &::part(native) {
+        @apply duration-300 ease-in;
+      }
+    }
+  }
+
+  .theme-btn {
+    @apply min-h-auto w-auto rounded-xl text-sm text-white-400 shadow-none dark:text-white-200;
+
+    &::part(native) {
+      @apply min-h-auto w-7 bg-transparent p-0;
+    }
+
+    &:hover {
+      @apply text-orange-400 shadow-none;
+    }
+  }
+
+  .shadows {
+    @apply shadow duration-500 ease-in-out hover:shadow-md dark:shadow-lg hover:dark:shadow-2xl;
+  }
+}
+
+.invisible {
+  @apply hidden;
+}
+
+.ion-page {
+  @apply relative h-full w-full;
+}
+
+.notistack-CollapseWrapper {
+  @apply !p-0;
+}
+
+.notistack-MuiContent-error,
+.notistack-MuiContent-info,
+.notistack-MuiContent-warning,
+.notistack-MuiContent-success {
+  @apply flex justify-between gap-4 rounded-xl bg-white-50 !px-6 !py-4 text-white-950 dark:bg-ebony-950 dark:text-white-200;
+
+  #notistack-snackbar {
+    @apply flex items-center gap-2 p-0;
+  }
+
+  div:last-child {
+    @apply m-0 p-0;
+
+    button {
+      @apply transition-all;
+
+      &:hover {
+        @apply text-rose-400 transition-all;
+      }
+    }
+  }
+}

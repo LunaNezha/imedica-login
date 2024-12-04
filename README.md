@@ -4,6 +4,7 @@
 # **IMEDICA**
 
 A modern, mobile-first login interface built with cutting-edge web technologies. Designed for flexibility and responsiveness, this application supports multiple themes, multi-language functionality, and a user-friendly drawer menu.
+The **iMedica Login** leverages AI to provide medication management services for patients and doctors. This project focuses solely on the login functionality, delivering a sleek, responsive, and mobile-first interface to authenticate users securely.
 
 ![App Screenshot](src/assets/images/screenshot.png)
 

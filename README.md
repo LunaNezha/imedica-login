@@ -30,13 +30,13 @@ The **iMedica Login** leverages AI to provide medication management services for
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/LunaNezha/imedica-login
 ```
 
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd imedica-login
 ```
 
 Install dependencies

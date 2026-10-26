@@ -58,6 +58,7 @@ export default defineConfig(({ mode }) => {
     },
   };
   return {
+    base: mode === "production" ? "/imedica-login/" : "/",
     plugins: [
       react(),
       socialMetadata,

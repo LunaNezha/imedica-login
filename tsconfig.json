@@ -2,16 +2,14 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
     "moduleResolution": "Node",
@@ -20,21 +18,12 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@public/*": [
-        "./public/*"
-      ],
-      "@src/*": [
-        "./src/*"
-      ],
-      "@assets/*": [
-        "./src/assets/*"
-      ],
+      "@public/*": ["./public/*"],
+      "@src/*": ["./src/*"],
+      "@assets/*": ["./src/assets/*"]
     }
   },
-  "include": [
-    "src",
-    "i18n.ts"
-  ],
+  "include": ["src"],
   "references": [
     {
       "path": "./tsconfig.node.json"

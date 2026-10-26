@@ -1,43 +1,62 @@
-import { Route } from "react-router";
-import { lazy } from "react";
+import { matchPath, Route, useLocation } from "react-router";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { updateDocumentMetadata } from "@src/utils/document-metadata";
 import authRouteLists from "./auth-route-lists";
 import mainRouteLists from "./main-route-lists";
 import { IonRouterOutlet } from "@ionic/react";
+import { PathNames } from "@src/constants/pathnames.const";
 
-const AuthLayout = lazy(() => import("@src/layouts/auth-layout"));
-const MainLayout = lazy(() => import("@src/layouts/main-layout"));
-const NotFound = lazy(() => import("@src/pages/not-found"));
+import AuthLayout from "@src/layouts/auth-layout";
+import MainLayout from "@src/layouts/main-layout";
+import NotFound from "@src/pages/not-found";
 
 const Routes = () => {
+  const { pathname } = useLocation();
+  const { t } = useTranslation();
+  const isKnownRoute = [...mainRouteLists, ...authRouteLists].some(({ path }) =>
+    matchPath(pathname, { path, exact: true }),
+  );
+  useEffect(() => {
+    updateDocumentMetadata(
+      t(isKnownRoute ? "metadata.title" : "metadata.not_found_title"),
+      t("metadata.description"),
+    );
+  }, [isKnownRoute, t]);
   return (
     <IonRouterOutlet>
       {/* main route lists */}
-      {mainRouteLists.map((item, index) => (
+      {mainRouteLists.map((item) => (
         <Route
-          key={index}
+          exact
+          key={item.path}
           path={item.path}
           render={() => <MainLayout>{item.component}</MainLayout>}
         />
       ))}
 
       {/* auth route lists */}
-      {authRouteLists.map((item, index) => (
+      {authRouteLists.map((item) => (
         <Route
-          key={index}
+          exact
+          key={item.path}
           path={item.path}
-          render={() => <AuthLayout>{item.component}</AuthLayout>}
+          render={() => (
+            <AuthLayout welcome={item.path === PathNames.Login}>
+              {item.component}
+            </AuthLayout>
+          )}
         />
       ))}
 
-      {/* not found - 404 */}
-      {/* <Route
-        path={PathNames.NotFound}
+      {/* Ionic requires a pathless fallback so it cannot override matched routes. */}
+      <Route
         render={() => (
-          <AuthLayout>
+          <AuthLayout welcome>
             <NotFound />
           </AuthLayout>
         )}
-      /> */}
+      />
     </IonRouterOutlet>
   );
 };

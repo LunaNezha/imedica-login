@@ -9,16 +9,12 @@ import { THEME } from "@src/constants/local-storage.const";
 import secureLocalStorage from "react-secure-storage";
 import { DARK, LIGHT } from "@src/constants/theme.const";
 
-export type Theme = "light" | "dark";
+import { Theme } from "@src/types/theme";
+export type { Theme } from "@src/types/theme";
 
 type ThemeContextProps = {
   theme: Theme;
   toggleTheme: () => void;
-};
-
-const defaultContextValue: ThemeContextProps = {
-  theme: (secureLocalStorage.getItem(THEME) as Theme) || LIGHT,
-  toggleTheme: () => {},
 };
 
 type ThemeProviderProps = {
@@ -26,25 +22,34 @@ type ThemeProviderProps = {
   initialTheme: Theme;
 };
 
-const ThemeContext = createContext<ThemeContextProps>(defaultContextValue);
+const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
 const ThemeProvider = ({ children, initialTheme }: ThemeProviderProps) => {
-  const storedTheme =
-    (secureLocalStorage.getItem(THEME) as Theme) ||
-    (initialTheme as Theme) ||
-    LIGHT;
-  const [theme, setTheme] = useState<Theme>(storedTheme);
+  const [theme, setTheme] = useState<Theme>(initialTheme);
 
   useEffect(() => {
     document.body.classList.toggle("dark", theme === DARK);
+    document.documentElement.classList.toggle("dark", theme === DARK);
+    document.documentElement.classList.toggle(
+      "ion-palette-dark",
+      theme === DARK,
+    );
+    const browserColor = theme === DARK ? "#11221e" : "#f7faf8";
+    document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+      meta.setAttribute("content", browserColor);
+    });
+    document
+      .querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')
+      ?.setAttribute("content", theme === DARK ? "black" : "default");
+    try {
+      secureLocalStorage.setItem(THEME, theme);
+    } catch {
+      // Theme switching does not require writable browser storage.
+    }
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((current) => {
-      const newTheme = current === LIGHT ? DARK : LIGHT;
-      secureLocalStorage.setItem(THEME, newTheme);
-      return newTheme;
-    });
+    setTheme((current) => (current === LIGHT ? DARK : LIGHT));
   };
 
   const contextValue: ThemeContextProps = {

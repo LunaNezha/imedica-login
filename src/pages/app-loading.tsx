@@ -1,7 +1,10 @@
 const AppLoading = () => {
   return (
-    <div className="flex h-screen items-center justify-center bg-white-50 dark:bg-ebony-950">
-      <span className="loader"></span>
+    <div className="loading-screen" role="status" aria-label="iMedica">
+      <div>
+        <span className="loader" aria-hidden="true" />
+        <span>iMedica</span>
+      </div>
     </div>
   );
 };

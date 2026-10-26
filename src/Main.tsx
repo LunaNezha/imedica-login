@@ -1,5 +1,5 @@
-import i18n from "./i18n";
-import { lazy } from "react";
+import i18n, { i18nReady } from "./i18n";
+import { lazy, Suspense } from "react";
 import { createRoot, Root } from "react-dom/client";
 import secureLocalStorage from "react-secure-storage";
 import { THEME } from "./constants/local-storage.const";
@@ -7,6 +7,10 @@ import { Theme, ThemeProvider } from "./providers/theme-provider";
 import { LIGHT } from "./constants/theme.const";
 import { I18nextProvider } from "react-i18next";
 import ToastProvider from "./providers/toast-provider";
+import ErrorBoundary from "./components/ui/error-boundary";
+import AppLoading from "./pages/app-loading";
+import { AuthProvider } from "./providers/auth-provider";
+import { defaultAuthAdapter } from "./services/default-auth";
 
 const App = lazy(() => import("./App"));
 const container = document.getElementById("root");
@@ -24,16 +28,30 @@ if (container) {
   }
 
   const root = typedContainer.__root!;
-  const initialTheme = (secureLocalStorage.getItem(THEME) as Theme) || LIGHT;
+  let initialTheme: Theme = LIGHT;
+  try {
+    const saved = secureLocalStorage.getItem(THEME);
+    if (saved === "light" || saved === "dark") initialTheme = saved;
+  } catch {
+    initialTheme = LIGHT;
+  }
 
-  root.render(
-    <I18nextProvider i18n={i18n}>
-      <ThemeProvider initialTheme={initialTheme}>
-        <ToastProvider>
-          <App />
-        </ToastProvider>
-      </ThemeProvider>
-    </I18nextProvider>,
+  void i18nReady.then(() =>
+    root.render(
+      <ErrorBoundary>
+        <Suspense fallback={<AppLoading />}>
+          <I18nextProvider i18n={i18n}>
+            <ThemeProvider initialTheme={initialTheme}>
+              <ToastProvider>
+                <AuthProvider adapter={defaultAuthAdapter}>
+                  <App />
+                </AuthProvider>
+              </ToastProvider>
+            </ThemeProvider>
+          </I18nextProvider>
+        </Suspense>
+      </ErrorBoundary>,
+    ),
   );
 } else {
   console.error("Root container not found");

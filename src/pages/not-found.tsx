@@ -1,65 +1,29 @@
-import ErrorImageDark from "@assets/images/error-404-dark.png";
-import ErrorImageLight from "@assets/images/error-404-light.png";
-
-import { Button } from "@src/components/buttons";
-import { PathNames } from "@src/constants/pathnames.const";
-import { DARK } from "@src/constants/theme.const";
-import { useTheme } from "@src/providers/theme-provider";
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { ActionLink } from "@src/components/ui/action-button";
+import { Icon } from "@src/components/ui/icon";
+import { AuthHeading } from "@src/components/auth/auth-heading";
+import AuthFooter from "@src/components/auth/auth-footer";
+import { PathNames } from "@src/constants/pathnames.const";
 
-const NotFound = () => {
-  const { theme } = useTheme();
-  const history = useHistory();
-  const { t } = useTranslation("translations");
-
-  useEffect(() => {
-    document.title = t("titles.not_found");
-  }, []);
-
+export default function NotFound() {
+  const { t } = useTranslation();
   return (
-    <div className="relative flex h-full flex-col items-center justify-center gap-6">
-      {/* image */}
-      <div className="flex">
-        <img
-          src={theme === DARK ? ErrorImageDark : ErrorImageLight}
-          alt="Unauthorized Image"
-          className="h-full w-full object-contain"
-        />
+    <main className="auth-screen not-found-screen">
+      <div className="not-found-art" aria-hidden="true">
+        <span>404</span>
+        <Icon name="heart" />
       </div>
-
-      {/* content */}
-      <div className="flex flex-col items-center justify-center gap-10 p-8 text-white-950 dark:text-white-200">
-        {/* titles */}
-        <div className="flex flex-col items-center justify-center gap-[2px] text-center ltr:font-montserrat rtl:font-iranyekan">
-          <h2 className="text-2xl font-extrabold rtl:font-black">
-            {t("titles.404_erorr")}
-          </h2>
-
-          <p className="w-10/12 text-base font-light opacity-80 dark:opacity-60 rtl:font-normal">
-            {t("messages.error_404")}
-          </p>
-        </div>
-
-        {/* go back home */}
-        <Button
-          fullWidth
-          type="button"
-          variant={"filled-green"}
-          textSize={"md"}
-          padding={"lg"}
-          shadows={"md"}
-          round={"full"}
-          fontWeight={"bold"}
-          onClick={() => history.push(PathNames.Home)}
-        >
-          <i className="fi fi-sr-home"></i>
-          <span>{t("buttons.back_home")}</span>
-        </Button>
-      </div>
-    </div>
+      <AuthHeading
+        icon="info"
+        eyebrow={t("not_found.eyebrow")}
+        title={t("not_found.title")}
+        description={t("not_found.description")}
+      />
+      <ActionLink to={PathNames.Login} replace>
+        <Icon name="arrowBack" className="directional-icon" />
+        {t("not_found.back_to_login")}
+      </ActionLink>
+      <AuthFooter />
+    </main>
   );
-};
-
-export default NotFound;
+}

@@ -1,7 +1,7 @@
 import { PathNames } from "@src/constants/pathnames.const";
-import Login from "@src/pages/auth/login/login-initial";
-import LoginWithPhone from "@src/pages/auth/login/login-with-phone";
-import LoginWithUsername from "@src/pages/auth/login/login-with-username";
+import Login from "@src/components/auth/login-initial";
+import LoginWithPhone from "@src/components/auth/login-with-phone";
+import LoginWithUsername from "@src/components/auth/login-with-username";
 
 export default [
   {

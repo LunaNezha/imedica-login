@@ -1,21 +1,32 @@
 {
-  "short_name": "Ionic App",
-  "name": "My Ionic App",
+  "id": "./",
+  "short_name": "iMedica",
+  "name": "iMedica — AI Healthcare Login",
+  "description": "Mobile-first healthcare sign-in with multilingual layouts and light and dark themes.",
+  "lang": "en",
   "icons": [
     {
-      "src": "assets/icon/favicon.png",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "branding/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "assets/icon/icon.png",
+      "src": "branding/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "branding/icon-maskable-512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "./login",
+  "scope": "./",
   "display": "standalone",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff"
+  "theme_color": "#f7faf8",
+  "background_color": "#f7faf8"
 }
